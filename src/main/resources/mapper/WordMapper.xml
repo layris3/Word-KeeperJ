@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sam.wordkeeperj.mapper.WordMapper">
+
+    <resultMap id="wordDetailResultMap" type="Word">
+        <id property="wordName" column="word_name"/>
+        <result property="chapter" column="chapter"/>
+        <result property="pronunciation" column="pronunciation"/>
+        <result property="isImportant" column="is_important"/>
+        <result property="category" column="category"/>
+        <collection property="meanings" ofType="Meaning">
+            <id property="id" column="meaning_id"/>
+            <result property="wordName" column="word_name"/>
+            <result property="type" column="type"/>
+            <result property="content" column="meaning_content"/>
+        </collection>
+        <collection property="sentences" ofType="Sentence">
+            <id property="id" column="sentence_id"/>
+            <result property="wordName" column="word_name"/>
+            <result property="content" column="sentence_content"/>
+            <result property="chinese" column="chinese"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="wordDetailResultMap">
+        select  w.word_name, w.chapter, w.pronunciation, w.is_important, w.category,
+                s.id as sentence_id, s.content as sentence_content, s.chinese,
+                m.id as meaning_id, m.type, m.content as meaning_content
+        from word w
+        left join sentence s on s.word_name = w.word_name
+        left join meaning m on m.word_name = w.word_name
+        limit 2
+    </select>
+
+    <select id="findByWordName" resultMap="wordDetailResultMap">
+        select  w.word_name, w.chapter, w.pronunciation, w.is_important, w.category,
+        s.id as sentence_id, s.content as sentence_content, s.chinese,
+        m.id as meaning_id, m.type, m.content as meaning_content
+        from word w
+        left join sentence s on s.word_name = w.word_name
+        left join meaning m on m.word_name = w.word_name
+        where w.word_name = #{wordName}
+    </select>
+</mapper>
