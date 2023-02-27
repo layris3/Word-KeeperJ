@@ -25,23 +25,39 @@
         </collection>
     </resultMap>
 
-    <select id="findAll" resultMap="wordDetailResultMap">
-        select  w.word_name, w.chapter, w.pronunciation, w.is_important, w.category,
-                s.id as sentence_id, s.content as sentence_content, s.chinese,
-                m.id as meaning_id, m.type, m.content as meaning_content
-        from word w
-        left join sentence s on s.word_name = w.word_name
-        left join meaning m on m.word_name = w.word_name
-        limit 2
-    </select>
-
     <select id="findByWordName" resultMap="wordDetailResultMap">
-        select  w.word_name, w.chapter, w.pronunciation, w.is_important, w.category,
+        select w.word_name, w.chapter, w.pronunciation, w.is_important, w.category,
         s.id as sentence_id, s.content as sentence_content, s.chinese,
         m.id as meaning_id, m.type, m.content as meaning_content
         from word w
         left join sentence s on s.word_name = w.word_name
         left join meaning m on m.word_name = w.word_name
         where w.word_name = #{wordName}
+    </select>
+
+    <select id="getAllCategories" resultType="map">
+        select distinct category
+        from word
+        where category is not null
+    </select>
+
+    <select id="getCategoryChapterInfo" resultType="map">
+        select count(1) as count, convert(chapter,signed) as chapter
+        from word
+        where convert(chapter,unsigned) is not null
+        and category = #{category}
+        group by 2
+        order by 2
+    </select>
+
+    <select id="getChapterWords" resultMap="wordDetailResultMap">
+        select w.word_name, w.chapter, w.pronunciation, w.is_important, w.category,
+        s.id as sentence_id, s.content as sentence_content, s.chinese,
+        m.id as meaning_id, m.type, m.content as meaning_content
+        from word w
+        left join sentence s on s.word_name = w.word_name
+        left join meaning m on m.word_name = w.word_name
+        where w.chapter = #{chapter}
+        and w.category = #{category}
     </select>
 </mapper>
