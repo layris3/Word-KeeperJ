@@ -68,4 +68,11 @@
         category = #{category}
         where word_name = #{wordName}
     </update>
+
+    <insert id="addWord">
+        insert into word
+        (word_name, chapter, pronunciation, category)
+        values
+        (#{wordName}, #{chapter}, #{pronunciation}, #{category})
+    </insert>
 </mapper>

@@ -34,4 +34,8 @@ public class WordService {
     public int updateWord(Word word) {
         return this.wordMapper.updateWord(word);
     }
+
+    public int addWord(Word word) {
+        return this.wordMapper.addWord(word);
+    }
 }
