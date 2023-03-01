@@ -7,4 +7,18 @@
     <select id="findAllByWordName" resultType="com.sam.wordkeeperj.entity.Sentence">
         select * from sentence where word_name = #{wordName}
     </select>
+
+    <update id="updateSentence">
+        update sentence set
+        content = #{content},
+        chinese = #{chinese}
+        where id = #{id}
+    </update>
+
+    <insert id="addSentence">
+        insert into sentence
+        (id, word_name, content, chinese)
+        values
+        (null, #{wordName}, #{content}, #{chinese})
+    </insert>
 </mapper>

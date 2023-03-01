@@ -15,6 +15,10 @@ public class WordService {
         this.wordMapper = wordMapper;
     }
 
+    public Word find(String wordName) {
+        return this.wordMapper.findByWordName(wordName);
+    }
+
     public List<Map<String, String>> getAllCategories() {
         return this.wordMapper.getAllCategories();
     }
@@ -25,5 +29,9 @@ public class WordService {
 
     public List<Word> getChapterWords(String category, String chapter) {
         return this.wordMapper.getChapterWords(category, chapter);
+    }
+
+    public int updateWord(Word word) {
+        return this.wordMapper.updateWord(word);
     }
 }

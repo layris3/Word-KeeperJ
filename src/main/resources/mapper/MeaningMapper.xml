@@ -7,4 +7,18 @@
     <select id="findAllByWordName" resultType="com.sam.wordkeeperj.entity.Meaning">
         select * from meaning where word_name = #{wordName}
     </select>
+
+    <update id="updateMeaning">
+        update meaning set
+        type = #{type},
+        content = #{content}
+        where id = #{id}
+    </update>
+
+    <insert id="addMeaning">
+        insert into meaning
+        (id, word_name, type, content)
+        values
+        (null, #{wordName}, #{type}, #{content})
+    </insert>
 </mapper>

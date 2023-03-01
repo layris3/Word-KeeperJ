@@ -60,4 +60,12 @@
         where w.chapter = #{chapter}
         and w.category = #{category}
     </select>
+
+    <update id="updateWord">
+        update word set
+        chapter = #{chapter},
+        pronunciation = #{pronunciation},
+        category = #{category}
+        where word_name = #{wordName}
+    </update>
 </mapper>
