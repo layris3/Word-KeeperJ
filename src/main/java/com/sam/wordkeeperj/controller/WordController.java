@@ -58,7 +58,7 @@ public class WordController {
         List<Meaning> meanings = word.getMeanings();
         if (meanings != null) {
             meanings.forEach(
-                    (meaning) -> {
+                    meaning -> {
                         if (meaning.getId() == 0)
                             this.meaningService.addMeaning(meaning);
                         else
@@ -69,12 +69,31 @@ public class WordController {
         List<Sentence> sentences = word.getSentences();
         if (sentences != null) {
             sentences.forEach(
-                    (sentence -> {
+                    sentence -> {
                         if (sentence.getId() == 0)
                             this.sentenceService.addSentence(sentence);
                         else
                             this.sentenceService.updateSentence(sentence);
-                    }));
+                    });
+        }
+    }
+
+    @PostMapping("/api/words")
+    public void addWord(@RequestBody Word word) {
+        this.wordService.addWord(word);
+
+        List<Meaning> meanings = word.getMeanings();
+        if (meanings != null) {
+            meanings.forEach(meaning -> {
+                this.meaningService.addMeaning(meaning);
+            });
+        }
+
+        List<Sentence> sentences = word.getSentences();
+        if (sentences != null) {
+            sentences.forEach(sentence -> {
+                this.sentenceService.addSentence(sentence);
+            });
         }
     }
 }
