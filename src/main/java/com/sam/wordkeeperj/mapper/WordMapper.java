@@ -18,5 +18,5 @@ public interface WordMapper {
 
     List<Word> getChapterWords(@Param("category") String category, @Param("chapter") String chapter);
 
-
+    int updateWord(Word word);
 }
